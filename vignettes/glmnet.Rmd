@@ -818,7 +818,7 @@ vfilter <- function(q = 0.3) {
 
 Here, our filter function `vfilter()` is a function generator as discussed above, and will exclude the fraction `q` of variables with the lowest variance.
 	
-We can also use `y` as part of our filtering. This final example builds on the example above. Here the response `y` is binary, taking two values. We want to filter out variables with low values of the two-sample t-statistic with groups defined by `y`. Again, we present an efficient function for computing the t-statistics, and then the filter. (Notice that for convenience, our function `uvar` above can optionally return a mean vector and a variance vector.)
+We can also use `y` as part of our filtering. This final example builds on the example above. Here the response `y` is binary, taking two values. We want to filter out variables with small absolute values for the two-sample t-statistic with groups defined by `y`. Again, we present an efficient function for computing the t-statistics, and then the filter. (Notice that for convenience, our function `uvar` above can optionally return a mean vector and a variance vector.)
 
 ```{r}
 ut.test <- function(x, y, s0 = 0) {
@@ -834,8 +834,8 @@ ut.test <- function(x, y, s0 = 0) {
 
 tfilter <- function(q = 0.3, s0 = 0) {
   function(x, y, ...) {
-    tstats <- ut.test(x, y, s0 = s0)
-    which(tstats < quantile(tstats, q))
+    abs_tstats <- abs(ut.test(x, y, s0 = s0))
+    which(abs_tstats < quantile(abs_tstats, q))
   }
 }
 ```

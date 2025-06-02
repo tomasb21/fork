@@ -465,32 +465,19 @@ glmnet=function(x,y,family=c("gaussian","binomial","poisson","multinomial","cox"
         nlam=as.integer(length(lambda))
       }
       is.sparse=FALSE
-      ix=jx=NULL
       if(inherits(x,"sparseMatrix")){##Sparse case
-        is.sparse=TRUE
-        x=as(x,"CsparseMatrix")
-        x=as(x,"dMatrix")
-#        x=as(x,"generalMatrix")
-        ix=as.integer(x@p+1)
-        jx=as.integer(x@i+1)
-
+          is.sparse=TRUE
+          if(!inherits(x,"dgCMatrix"))
+              x=as(as(as(x, "generalMatrix"), "CsparseMatrix"), "dMatrix")
         # TODO: changed everything except cox to C++ implementation.
-        # C++ version takes xd as the dgCMatrix itself.
-        # Fortran requires xd to be the compressed data vector.
-        if (family != "cox") {
-            xd <- x
-        } else {
-            xd <- x@x
-        }
-
       } else if (!inherits(x, "matrix")) {
-        xd <- data.matrix(x)
+        x <- data.matrix(x)
       } else {
-        xd <- x
+        x <- x
       }
       # TODO: only coerce if xd is not sparse
-      if(!inherits(xd,"sparseMatrix")) {
-        storage.mode(xd) <- "double"
+      if(!inherits(x,"sparseMatrix")) {
+        storage.mode(x) <- "double"
       }
       if (trace.it) {
         if (relax) cat("Training Fit\n")
@@ -509,12 +496,12 @@ glmnet=function(x,y,family=c("gaussian","binomial","poisson","multinomial","cox"
       kopt=as.integer(kopt)
 
       fit=switch(family,
-                 "gaussian"=elnet(xd,is.sparse,y,weights,offset,type.gaussian,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,pb),
-                 "poisson"=fishnet(xd,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,pb),
-                 "binomial"=lognet(xd,is.sparse,ix,jx,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,kopt,family,pb),
-                 "multinomial"=lognet(xd,is.sparse,ix,jx,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,kopt,family,pb),
-                 "cox"=coxnet(xd,is.sparse,ix,jx,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,vnames,maxit),
-                 "mgaussian"=mrelnet(xd,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,jsd,intr,vnames,maxit,pb)
+                 "gaussian"=elnet(x,is.sparse,y,weights,offset,type.gaussian,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,pb),
+                 "poisson"=fishnet(x,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,pb),
+                 "binomial"=lognet(x,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,kopt,family,pb),
+                 "multinomial"=lognet(x,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,kopt,family,pb),
+                 "cox"=coxnet(x,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,vnames,maxit),
+                 "mgaussian"=mrelnet(x,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,jsd,intr,vnames,maxit,pb)
                  )
       if (trace.it) {
         utils::setTxtProgressBar(pb, nlam)

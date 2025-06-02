@@ -14,8 +14,9 @@ SEXP storePB(SEXP tpb) {
 void F77_SUB(setpb)(int *val) {
   SEXP s, t;
   /* printf("%d\n", *val); */
-  t = s = PROTECT(allocList(3));
-  SET_TYPEOF(s, LANGSXP);
+  /* t = s = PROTECT(allocList(3)); */
+  /* SET_TYPEOF(s, LANGSXP); */
+  t = s = PROTECT(LCONS(R_NilValue, Rf_allocList(2)));
   SETCAR(t, install("setTxtProgressBar")); t = CDR(t);
   SETCAR(t,  pb); SET_TAG(t, install("pb"));  t = CDR(t);
   SETCAR(t,  ScalarInteger(*val)); SET_TAG(t, install("value"));

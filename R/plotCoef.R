@@ -19,7 +19,8 @@ plotCoef=function(beta,norm,lambda,df,dev,label=FALSE,xvar=c("norm","lambda","de
     },
     "lambda"={
       index=log(lambda)
-      iname="Log Lambda"
+      iname= expression(Log(lambda))
+      ##iname = "Log Lambda"
       approx.f=0
     },
     "dev"= {

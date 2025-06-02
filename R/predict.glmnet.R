@@ -113,7 +113,7 @@ predict.glmnet=function(object,newx,s=NULL,type=c("link","response","coefficient
 
     nbeta=nbeta[,lamlist$left,drop=FALSE]%*%Diagonal(x=lamlist$frac) +nbeta[,lamlist$right,drop=FALSE]%*%Diagonal(x=1-lamlist$frac)
     namess=names(s)
-    if(is.null(namess))namess=paste0("s",seq(along=s))
+    if(is.null(namess))namess=paste0("s",seq(0,length=length(s)))
     dimnames(nbeta)=list(vnames,namess)
   }
   if(type=="coefficients")return(nbeta)

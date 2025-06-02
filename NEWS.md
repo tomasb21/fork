@@ -1,3 +1,8 @@
+# glmnet 4.1-9
+
+Changed default plotting xvar = "lambda". Corrected some minor issues
+in citation file.
+
 # glmnet 4.1-7
 
 Added DOI for JSS 2023 paper and corrected some typos in documentation

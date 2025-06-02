@@ -40,7 +40,7 @@ predict.multnet <-
     }
   }
   else {
-    for (i in seq(nclass)) nbeta[[i]] = methods::rbind2(a0[i, ], nbeta[[i]])#was rbind2
+    for (i in seq(nclass)) nbeta[[i]] = methods::rbind2(a0[i,,drop=FALSE ], nbeta[[i]])#was rbind2
     nlambda=length(object$lambda)
   }
   if (type == "coefficients")

@@ -8,9 +8,9 @@
 #'
 #' @aliases plot.glmnet plot.multnet plot.mrelnet plot.relaxed
 #' @param x fitted \code{"glmnet"} model
-#' @param xvar What is on the X-axis. \code{"norm"} plots against the L1-norm
-#' of the coefficients, \code{"lambda"} against the log-lambda sequence, and
-#' \code{"dev"} against the percent deviance explained.
+#' @param xvar What is on the X-axis. \code{"lambda"} plots against the log-lambda sequence,
+#' \code{"norm"} against the L1-norm of the coefficients, and
+#' \code{"dev"} against the percent deviance explained. Warning: "norm" is the L1 norm of the coefficients on the glmnet object. There are many reasons why this might not be appropriate, such as automatic standardization, penalty factors, and values of `alpha` less than 1, which can lead to unusual looking plots.
 #' @param label If \code{TRUE}, label the curves with variable sequence
 #' numbers.
 #' @param \dots Other graphical parameters to plot
@@ -35,7 +35,7 @@
 #' plot(fit3,pch=19)
 #' @method plot glmnet
 #' @export
-plot.glmnet=function(x, xvar=c("norm","lambda","dev"),label=FALSE,...){
+plot.glmnet=function(x, xvar=c("lambda","norm","dev"),label=FALSE,...){
   xvar=match.arg(xvar)
  plotCoef(x$beta,lambda=x$lambda,df=x$df,dev=x$dev.ratio,label=label,xvar=xvar,...)
 }

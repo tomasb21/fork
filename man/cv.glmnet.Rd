@@ -51,7 +51,7 @@ regression only, and gives misclassification error.
 gives area under the ROC curve. \code{type.measure="mse"} or
 \code{type.measure="mae"} (mean absolute error) can be used by all models
 except the \code{"cox"}; they measure the deviation from the fitted mean to
-the response.
+the response. For binomial model and binary data, \code{type.measure="mse"} amounts to the "Brier" score.
 \code{type.measure="C"} is Harrel's concordance measure, only available for \code{cox} models.}
 
 \item{nfolds}{number of folds - default is 10. Although \code{nfolds} can be
@@ -111,7 +111,7 @@ parameter \code{gamma} as well as \code{lambda}. Default is
 useful for big models that take a long time to fit. Limited tracing if
 \code{parallel=TRUE}}
 
-\item{\dots}{Other arguments that can be passed to \code{glmnet}}
+\item{\dots}{Other arguments that can be passed to glmnet, for example \code{alpha}, \code{nlambda}, etc. See \code{glmnet} for details.}
 }
 \value{
 an object of class \code{"cv.glmnet"} is returned, which is a list

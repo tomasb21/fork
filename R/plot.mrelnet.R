@@ -4,7 +4,7 @@
 #' @rdname plot.glmnet
 #' @export
 plot.mrelnet <-
-  function(x, xvar=c("norm","lambda","dev"),label=FALSE,type.coef=c("coef","2norm"),...){
+  function(x, xvar=c("lambda","norm","dev"),label=FALSE,type.coef=c("coef","2norm"),...){
     type.coef=match.arg(type.coef)
     xvar=match.arg(xvar)
     beta=x$beta

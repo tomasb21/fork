@@ -56,6 +56,13 @@ Statist. Sc. Vol. 35(4), 579-592},
 \url{https://arxiv.org/abs/1707.08692}.\cr
 Glmnet webpage with four vignettes: \url{https://glmnet.stanford.edu}.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://glmnet.stanford.edu}
+}
+
+}
 \author{
 Jerome Friedman, Trevor Hastie and Rob Tibshirani\cr Maintainer:
 Trevor Hastie \href{mailto:hastie@stanford.edu}{hastie@stanford.edu}

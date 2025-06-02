@@ -1,5 +1,4 @@
-# Needs ix and jx for possible subsetting.
-lognet=function(x,is.sparse,ix,jx,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,kopt,family,pb){
+lognet=function(x,is.sparse,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,nx,nlam,flmin,ulam,thresh,isd,intr,vnames,maxit,kopt,family,pb){
   nc=dim(y)
   maxit=as.integer(maxit)
   if(is.null(nc)){
@@ -29,10 +28,7 @@ lognet=function(x,is.sparse,ix,jx,y,weights,offset,alpha,nobs,nvars,jd,vp,cl,ne,
   o=weights>0
   if(!all(o)){ #subset the data
     y=y[o,]
-    if(is.sparse){ # we have to subset this beast with care
-      x=sparseMatrix(i=jx,p=ix-1,x=x@x,dims=c(nobs,nvars))[o,,drop=FALSE]
-    }
-    else x=x[o,,drop=FALSE]
+    x=x[o,,drop=FALSE]
     nobs=sum(o)
   }else o=NULL
 

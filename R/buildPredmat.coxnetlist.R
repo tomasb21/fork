@@ -11,9 +11,8 @@ buildPredmat.coxnetlist <-
         rn=rownames(x)
         sn=paste("s",seq(0,length=nlambda),sep="")
         dimnames(predmat)=list(rn,sn)
-    predmat
 
-    for (i in seq(nfolds)) {
+        for (i in seq(nfolds)) {
         which = foldid == i
         fitobj = outlist[[i]]
         coefmat = switch(alignment,
@@ -24,21 +23,24 @@ buildPredmat.coxnetlist <-
         if(devtrue){
             if (grouped) {
                 plfull = coxnet.deviance(x = x, y = y, offset = offset,
-                                         weights = weights, beta = coefmat)
+                                         weights = weights, beta = coefmat,
+					 std.weights = FALSE)
                 plminusk = coxnet.deviance(x = x[!which, ], y = y[!which, ], 
                                            offset = offset[!which],
                                            weights = weights[!which], 
-                                           beta = coefmat)
+                                           beta = coefmat,
+  					   std.weights = FALSE)
                 cvraw[i, seq(nlami)] = (plfull - plminusk)[seq(nlami)]
             }
             else {
                 plk = coxnet.deviance(x = x[which, ], y = y[which, ], 
                                       offset = offset[which], 
-                                      weights = weights[which], beta = coefmat)
+                                      weights = weights[which], beta = coefmat,
+				      std.weights = FALSE)
                 cvraw[i, seq(nlami)] = plk[seq(nlami)]
             }
         }
-        predmat[which, seq(nlami)] = as.matrix(x[which,]%*% coefmat)
+        predmat[which, seq(nlami)] = as.matrix(x[which,]%*% coefmat[,seq(nlami)])
         if (nlami < nlambda){
             if(devtrue)cvraw[i, seq(from = nlami, to = nlambda)] = cvraw[i, nlami]
             predmat[which,seq(from=nlami,to=nlambda)]=predmat[which,nlami]

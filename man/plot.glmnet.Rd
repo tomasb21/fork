@@ -8,11 +8,11 @@
 \alias{plot.relaxed}
 \title{plot coefficients from a "glmnet" object}
 \usage{
-\method{plot}{glmnet}(x, xvar = c("norm", "lambda", "dev"), label = FALSE, ...)
+\method{plot}{glmnet}(x, xvar = c("lambda", "norm", "dev"), label = FALSE, ...)
 
 \method{plot}{mrelnet}(
   x,
-  xvar = c("norm", "lambda", "dev"),
+  xvar = c("lambda", "norm", "dev"),
   label = FALSE,
   type.coef = c("coef", "2norm"),
   ...
@@ -20,7 +20,7 @@
 
 \method{plot}{multnet}(
   x,
-  xvar = c("norm", "lambda", "dev"),
+  xvar = c("lambda", "norm", "dev"),
   label = FALSE,
   type.coef = c("coef", "2norm"),
   ...
@@ -31,9 +31,9 @@
 \arguments{
 \item{x}{fitted \code{"glmnet"} model}
 
-\item{xvar}{What is on the X-axis. \code{"norm"} plots against the L1-norm
-of the coefficients, \code{"lambda"} against the log-lambda sequence, and
-\code{"dev"} against the percent deviance explained.}
+\item{xvar}{What is on the X-axis. \code{"lambda"} plots against the log-lambda sequence,
+\code{"norm"} against the L1-norm of the coefficients, and
+\code{"dev"} against the percent deviance explained. Warning: "norm" is the L1 norm of the coefficients on the glmnet object. There are many reasons why this might not be appropriate, such as automatic standardization, penalty factors, and values of \code{alpha} less than 1, which can lead to unusual looking plots.}
 
 \item{label}{If \code{TRUE}, label the curves with variable sequence
 numbers.}

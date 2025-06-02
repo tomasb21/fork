@@ -46,7 +46,7 @@
 #' gives area under the ROC curve. \code{type.measure="mse"} or
 #' \code{type.measure="mae"} (mean absolute error) can be used by all models
 #' except the \code{"cox"}; they measure the deviation from the fitted mean to
-#' the response.
+#' the response. For binomial model and binary data, \code{type.measure="mse"} amounts to the "Brier" score.
 #' \code{type.measure="C"} is Harrel's concordance measure, only available for \code{cox} models.
 #' @param nfolds number of folds - default is 10. Although \code{nfolds} can be
 #' as large as the sample size (leave-one-out CV), it is not recommended for
@@ -96,7 +96,7 @@
 #' @param trace.it If \code{trace.it=1}, then progress bars are displayed;
 #' useful for big models that take a long time to fit. Limited tracing if
 #' \code{parallel=TRUE}
-#' @param \dots Other arguments that can be passed to \code{glmnet}
+#' @param \dots Other arguments that can be passed to glmnet, for example \code{alpha}, \code{nlambda}, etc. See `glmnet` for details.
 #' @return an object of class \code{"cv.glmnet"} is returned, which is a list
 #' with the ingredients of the cross-validation fit.  If the object was created
 #' with \code{relax=TRUE} then this class has a prefix class of

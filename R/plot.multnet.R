@@ -1,7 +1,7 @@
 #' @method plot multnet
 #' @rdname plot.glmnet
 #' @export
-plot.multnet=function(x, xvar=c("norm","lambda","dev"),label=FALSE,type.coef=c("coef","2norm"),...){
+plot.multnet=function(x, xvar=c("lambda","norm","dev"),label=FALSE,type.coef=c("coef","2norm"),...){
   xvar=match.arg(xvar)
   type.coef=match.arg(type.coef)
     beta=x$beta

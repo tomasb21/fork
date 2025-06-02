@@ -79,7 +79,6 @@ NULL
 #' \code{coef.glmnet}
 #'
 #' @name glmnet-package
-#' @docType package
 #' @author Jerome Friedman, Trevor Hastie and Rob Tibshirani\cr Maintainer:
 #' Trevor Hastie <hastie@@stanford.edu>
 #' @references Friedman, J., Hastie, T. and Tibshirani, R. (2008)
@@ -117,7 +116,7 @@ NULL
 #' fit3 = glmnet(x, g4, family = "multinomial")
 #' predict(fit3, newx = x[1:3, ], type = "response", s = 0.01)
 #'
-NULL
+"_PACKAGE"
 
 
 

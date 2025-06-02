@@ -12,8 +12,8 @@ devtrue=type.measure=="deviance"
         cvraw=attr(predmat,"cvraw")
         status = y[, "status"]
         N = nfolds - apply(is.na(cvraw), 2, sum)
-        weights = as.vector(tapply(weights * status, foldid, sum))
-        cvraw = cvraw/weights
+        weights = as.vector(tapply(weights, foldid, sum))
+        cvraw = cvraw / weights
     }
     else
     {

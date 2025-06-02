@@ -118,7 +118,9 @@ attr(y3, "strata") <- strata
 str(y3[1:6])  # note that the strata attribute is no longer there
 
 ## ----error=TRUE---------------------------------------------------------------
+try({
 fit <- glmnet(x, y3, family = "cox")
+})
 
 ## -----------------------------------------------------------------------------
 fit <- glmnet(x, y, family = "cox")
