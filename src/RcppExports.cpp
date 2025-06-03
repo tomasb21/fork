@@ -12,7 +12,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // elnet_exp
-List elnet_exp(int ka, double parm, Eigen::MatrixXd x, Eigen::VectorXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List elnet_exp(int ka, double parm, Eigen::MatrixXd x, Eigen::VectorXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_elnet_exp(SEXP kaSEXP, SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP wSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP rsqSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -24,6 +24,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::VectorXd >::type w(wSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -44,12 +45,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(elnet_exp(ka, parm, x, y, w, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(elnet_exp(ka, parm, x, y, w, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // spelnet_exp
-List spelnet_exp(int ka, double parm, const Eigen::Map<Eigen::SparseMatrix<double> > x, Eigen::VectorXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List spelnet_exp(int ka, double parm, const Eigen::Map<Eigen::SparseMatrix<double> > x, Eigen::VectorXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_spelnet_exp(SEXP kaSEXP, SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP wSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP rsqSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -61,6 +62,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::VectorXd >::type w(wSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -81,12 +83,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(spelnet_exp(ka, parm, x, y, w, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(spelnet_exp(ka, parm, x, y, w, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // lognet_exp
-List lognet_exp(double parm, Eigen::MatrixXd x, Eigen::MatrixXd y, Eigen::MatrixXd g, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, int kopt, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List lognet_exp(double parm, Eigen::MatrixXd x, Eigen::MatrixXd y, Eigen::MatrixXd g, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, int kopt, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_lognet_exp(SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP gSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP koptSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP nulldevSEXP, SEXP devSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -97,6 +99,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type g(gSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -119,12 +122,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(lognet_exp(parm, x, y, g, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, kopt, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(lognet_exp(parm, x, y, g, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, kopt, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // splognet_exp
-List splognet_exp(double parm, const Eigen::Map<Eigen::SparseMatrix<double>> x, Eigen::MatrixXd y, Eigen::MatrixXd g, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, int kopt, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List splognet_exp(double parm, const Eigen::Map<Eigen::SparseMatrix<double>> x, Eigen::MatrixXd y, Eigen::MatrixXd g, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, int kopt, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_splognet_exp(SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP gSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP koptSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP nulldevSEXP, SEXP devSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -135,6 +138,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type g(gSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -157,12 +161,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(splognet_exp(parm, x, y, g, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, kopt, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(splognet_exp(parm, x, y, g, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, kopt, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // fishnet_exp
-List fishnet_exp(double parm, Eigen::MatrixXd x, Eigen::VectorXd y, Eigen::VectorXd g, const Eigen::Map<Eigen::VectorXd> w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List fishnet_exp(double parm, Eigen::MatrixXd x, Eigen::VectorXd y, Eigen::VectorXd g, const Eigen::Map<Eigen::VectorXd> w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_fishnet_exp(SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP gSEXP, SEXP wSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP nulldevSEXP, SEXP devSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -174,6 +178,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type w(wSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -195,12 +200,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(fishnet_exp(parm, x, y, g, w, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(fishnet_exp(parm, x, y, g, w, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // spfishnet_exp
-List spfishnet_exp(double parm, const Eigen::Map<Eigen::SparseMatrix<double>> x, Eigen::VectorXd y, Eigen::VectorXd g, const Eigen::Map<Eigen::VectorXd> w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List spfishnet_exp(double parm, const Eigen::Map<Eigen::SparseMatrix<double>> x, Eigen::VectorXd y, Eigen::VectorXd g, const Eigen::Map<Eigen::VectorXd> w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, Eigen::MatrixXd cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::VectorXd> a0, Eigen::Map<Eigen::MatrixXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, double nulldev, Eigen::Map<Eigen::VectorXd> dev, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_spfishnet_exp(SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP gSEXP, SEXP wSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP nulldevSEXP, SEXP devSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -212,6 +217,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type w(wSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);    
     Rcpp::traits::input_parameter< Eigen::MatrixXd >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -233,12 +239,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(spfishnet_exp(parm, x, y, g, w, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(spfishnet_exp(parm, x, y, g, w, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, intr, maxit, pb, lmu, a0, ca, ia, nin, nulldev, dev, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // multelnet_exp
-List multelnet_exp(double parm, Eigen::MatrixXd x, Eigen::MatrixXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int jsd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List multelnet_exp(double parm, Eigen::MatrixXd x, Eigen::MatrixXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, const Eigen::Map<Eigen::MatrixXd> cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int jsd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_multelnet_exp(SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP wSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP jsdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP rsqSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -249,6 +255,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::VectorXd >::type w(wSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);    
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -270,12 +277,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(multelnet_exp(parm, x, y, w, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, jsd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(multelnet_exp(parm, x, y, w, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, jsd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // multspelnet_exp
-List multspelnet_exp(double parm, const Eigen::Map<Eigen::SparseMatrix<double> > x, Eigen::MatrixXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int jsd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
+List multspelnet_exp(double parm, const Eigen::Map<Eigen::SparseMatrix<double> > x, Eigen::MatrixXd y, Eigen::VectorXd w, const Eigen::Map<Eigen::VectorXi> jd, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, const Eigen::Map<Eigen::MatrixXd> cl, int ne, int nx, int nlam, double flmin, const Eigen::Map<Eigen::VectorXd> ulam, double thr, int isd, int jsd, int intr, int maxit, SEXP pb, int lmu, Eigen::Map<Eigen::MatrixXd> a0, Eigen::Map<Eigen::VectorXd> ca, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> nin, Eigen::Map<Eigen::VectorXd> rsq, Eigen::Map<Eigen::VectorXd> alm, int nlp, int jerr);
 RcppExport SEXP _glmnet_multspelnet_exp(SEXP parmSEXP, SEXP xSEXP, SEXP ySEXP, SEXP wSEXP, SEXP jdSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP neSEXP, SEXP nxSEXP, SEXP nlamSEXP, SEXP flminSEXP, SEXP ulamSEXP, SEXP thrSEXP, SEXP isdSEXP, SEXP jsdSEXP, SEXP intrSEXP, SEXP maxitSEXP, SEXP pbSEXP, SEXP lmuSEXP, SEXP a0SEXP, SEXP caSEXP, SEXP iaSEXP, SEXP ninSEXP, SEXP rsqSEXP, SEXP almSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -286,6 +293,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::VectorXd >::type w(wSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type jd(jdSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);    
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type ne(neSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
@@ -307,7 +315,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type alm(almSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(multspelnet_exp(parm, x, y, w, jd, vp, cl, ne, nx, nlam, flmin, ulam, thr, isd, jsd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(multspelnet_exp(parm, x, y, w, jd, vp, mp, cl, ne, nx, nlam, flmin, ulam, thr, isd, jsd, intr, maxit, pb, lmu, a0, ca, ia, nin, rsq, alm, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -465,7 +473,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // wls_exp
-List wls_exp(double alm0, double almc, double alpha, int m, int no, int ni, const Eigen::Map<Eigen::MatrixXd> x, Eigen::Map<Eigen::VectorXd> r, Eigen::Map<Eigen::VectorXd> xv, const Eigen::Map<Eigen::VectorXd> v, int intr, const Eigen::Map<Eigen::VectorXi> ju, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> cl, int nx, double thr, int maxit, Eigen::Map<Eigen::VectorXd> a, double aint, Eigen::Map<Eigen::VectorXd> g, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> iy, int iz, Eigen::Map<Eigen::VectorXi> mm, int nino, double rsqc, int nlp, int jerr);
+List wls_exp(double alm0, double almc, double alpha, int m, int no, int ni, const Eigen::Map<Eigen::MatrixXd> x, Eigen::Map<Eigen::VectorXd> r, Eigen::Map<Eigen::VectorXd> xv, const Eigen::Map<Eigen::VectorXd> v, int intr, const Eigen::Map<Eigen::VectorXi> ju, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, const Eigen::Map<Eigen::MatrixXd> cl, int nx, double thr, int maxit, Eigen::Map<Eigen::VectorXd> a, double aint, Eigen::Map<Eigen::VectorXd> g, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> iy, int iz, Eigen::Map<Eigen::VectorXi> mm, int nino, double rsqc, int nlp, int jerr);
 RcppExport SEXP _glmnet_wls_exp(SEXP alm0SEXP, SEXP almcSEXP, SEXP alphaSEXP, SEXP mSEXP, SEXP noSEXP, SEXP niSEXP, SEXP xSEXP, SEXP rSEXP, SEXP xvSEXP, SEXP vSEXP, SEXP intrSEXP, SEXP juSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP nxSEXP, SEXP thrSEXP, SEXP maxitSEXP, SEXP aSEXP, SEXP aintSEXP, SEXP gSEXP, SEXP iaSEXP, SEXP iySEXP, SEXP izSEXP, SEXP mmSEXP, SEXP ninoSEXP, SEXP rsqcSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -483,6 +491,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type intr(intrSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type ju(juSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
     Rcpp::traits::input_parameter< double >::type thr(thrSEXP);
@@ -498,12 +507,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type rsqc(rsqcSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(wls_exp(alm0, almc, alpha, m, no, ni, x, r, xv, v, intr, ju, vp, cl, nx, thr, maxit, a, aint, g, ia, iy, iz, mm, nino, rsqc, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(wls_exp(alm0, almc, alpha, m, no, ni, x, r, xv, v, intr, ju, vp, mp, cl, nx, thr, maxit, a, aint, g, ia, iy, iz, mm, nino, rsqc, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
 // spwls_exp
-List spwls_exp(double alm0, double almc, double alpha, int m, int no, int ni, const Eigen::Map<Eigen::SparseMatrix<double>> x, const Eigen::Map<Eigen::VectorXd> xm, const Eigen::Map<Eigen::VectorXd> xs, Eigen::Map<Eigen::VectorXd> r, Eigen::Map<Eigen::VectorXd> xv, const Eigen::Map<Eigen::VectorXd> v, int intr, const Eigen::Map<Eigen::VectorXi> ju, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> cl, int nx, double thr, int maxit, Eigen::Map<Eigen::VectorXd> a, double aint, Eigen::Map<Eigen::VectorXd> g, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> iy, int iz, Eigen::Map<Eigen::VectorXi> mm, int nino, double rsqc, int nlp, int jerr);
+List spwls_exp(double alm0, double almc, double alpha, int m, int no, int ni, const Eigen::Map<Eigen::SparseMatrix<double>> x, const Eigen::Map<Eigen::VectorXd> xm, const Eigen::Map<Eigen::VectorXd> xs, Eigen::Map<Eigen::VectorXd> r, Eigen::Map<Eigen::VectorXd> xv, const Eigen::Map<Eigen::VectorXd> v, int intr, const Eigen::Map<Eigen::VectorXi> ju, const Eigen::Map<Eigen::VectorXd> vp, const Eigen::Map<Eigen::MatrixXd> mp, const Eigen::Map<Eigen::MatrixXd> cl, int nx, double thr, int maxit, Eigen::Map<Eigen::VectorXd> a, double aint, Eigen::Map<Eigen::VectorXd> g, Eigen::Map<Eigen::VectorXi> ia, Eigen::Map<Eigen::VectorXi> iy, int iz, Eigen::Map<Eigen::VectorXi> mm, int nino, double rsqc, int nlp, int jerr);
 RcppExport SEXP _glmnet_spwls_exp(SEXP alm0SEXP, SEXP almcSEXP, SEXP alphaSEXP, SEXP mSEXP, SEXP noSEXP, SEXP niSEXP, SEXP xSEXP, SEXP xmSEXP, SEXP xsSEXP, SEXP rSEXP, SEXP xvSEXP, SEXP vSEXP, SEXP intrSEXP, SEXP juSEXP, SEXP vpSEXP, SEXP clSEXP, SEXP nxSEXP, SEXP thrSEXP, SEXP maxitSEXP, SEXP aSEXP, SEXP aintSEXP, SEXP gSEXP, SEXP iaSEXP, SEXP iySEXP, SEXP izSEXP, SEXP mmSEXP, SEXP ninoSEXP, SEXP rsqcSEXP, SEXP nlpSEXP, SEXP jerrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -523,6 +532,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type intr(intrSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXi> >::type ju(juSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type vp(vpSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type mp(mpSEXP);
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type cl(clSEXP);
     Rcpp::traits::input_parameter< int >::type nx(nxSEXP);
     Rcpp::traits::input_parameter< double >::type thr(thrSEXP);
@@ -538,7 +548,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< double >::type rsqc(rsqcSEXP);
     Rcpp::traits::input_parameter< int >::type nlp(nlpSEXP);
     Rcpp::traits::input_parameter< int >::type jerr(jerrSEXP);
-    rcpp_result_gen = Rcpp::wrap(spwls_exp(alm0, almc, alpha, m, no, ni, x, xm, xs, r, xv, v, intr, ju, vp, cl, nx, thr, maxit, a, aint, g, ia, iy, iz, mm, nino, rsqc, nlp, jerr));
+    rcpp_result_gen = Rcpp::wrap(spwls_exp(alm0, almc, alpha, m, no, ni, x, xm, xs, r, xv, v, intr, ju, vp, mp, cl, nx, thr, maxit, a, aint, g, ia, iy, iz, mm, nino, rsqc, nlp, jerr));
     return rcpp_result_gen;
 END_RCPP
 }
