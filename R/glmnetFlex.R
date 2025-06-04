@@ -103,7 +103,7 @@ glmnet.path <- function(x, y, weights=NULL, lambda = NULL, nlambda = 100,
                         lambda.min.ratio = ifelse(nobs<nvars, 0.01, 0.0001),
                         alpha = 1.0, offset = NULL, family = gaussian(),
                         standardize = TRUE, intercept = TRUE, thresh = 1e-10, maxit = 100000,
-                        penalty.factor = rep(1.0, nvars), exclude = integer(0), lower.limits = -Inf,
+                        penalty.factor = matrix(1.0, nrow=nvars, ncol=nc), exclude = integer(0), lower.limits = -Inf,
                         upper.limits = Inf, trace.it = 0) {
 
     ### Check on family argument
@@ -126,7 +126,15 @@ glmnet.path <- function(x, y, weights=NULL, lambda = NULL, nlambda = 100,
     np = dim(x)
     if(is.null(np) || (np[2] <= 1)) stop("x should be a matrix with 2 or more columns")
     nobs = as.integer(np[1]); nvars = as.integer(np[2])
-
+    if (is.vector(y)) { #we are assuming that y is a vector or a matrix
+        nc <- as.double(length(unique(y)))
+    } else if (is.matrix(y)) {
+          if (!all(y %in% c(0, 1)) || any(rowSums(y) != 1)) {
+            stop("y should be a one-hot encoded matrix")
+          } else {
+            nc <- as.double(ncol(y))
+          }
+    }
     # get feature variable names
     vnames=colnames(x)
     if(is.null(vnames))vnames=paste("V",seq(nvars),sep="")
@@ -178,9 +186,10 @@ glmnet.path <- function(x, y, weights=NULL, lambda = NULL, nlambda = 100,
         penalty.factor[jd] = 1 # ow can change lambda sequence
     }
     # check and standardize penalty factors (to sum to nvars)
-    vp = pmax(0, penalty.factor)
-    if (max(vp) <= 0) stop("All penalty factors are <= 0")
-    vp = as.double(vp * nvars / sum(vp))
+    mp = matrix(pmax(0, penalty.factor), nrow = nvars)
+    if (max(mp) <= 0) stop("All penalty factors are <= 0")
+    mp = mp * nvars / sum(mp)
+    vp = as.double(mp[,1])
 
 
     ### check on limits
@@ -458,7 +467,7 @@ glmnet.path <- function(x, y, weights=NULL, lambda = NULL, nlambda = 100,
 glmnet.fit <- function(x, y, weights, lambda, alpha = 1.0,
                        offset = rep(0, nobs), family = gaussian(),
                        intercept = TRUE, thresh = 1e-10, maxit = 100000,
-                       penalty.factor = rep(1.0, nvars), exclude = c(), lower.limits = -Inf,
+                       penalty.factor=matrix(1.0, nrow=nvars, ncol=nc), exclude = c(), lower.limits = -Inf,
                        upper.limits = Inf, warm = NULL, from.glmnet.path = FALSE,
                        save.fit = FALSE, trace.it = 0) {
     this.call <- match.call()
@@ -467,6 +476,15 @@ glmnet.fit <- function(x, y, weights, lambda, alpha = 1.0,
     ### Prepare all the generic arguments
     nobs <- nrow(x)
     nvars <- ncol(x)
+    if (is.vector(y)) { #we are assuming that y is a vector or a matrix
+        nc <- as.double(length(unique(y)))
+    } else if (is.matrix(y)) {
+          if (!all(y %in% c(0, 1)) || any(rowSums(y) != 1)) {
+            stop("y should be a one-hot encoded matrix")
+          } else {
+            nc <- as.double(ncol(y))
+          }
+    }
     is.offset <- !(missing(offset))
     if (is.offset == FALSE) {
         offset <- as.double(y * 0) #keeps the shape of y
@@ -495,12 +513,14 @@ glmnet.fit <- function(x, y, weights, lambda, alpha = 1.0,
         if(length(exclude) > 0) {
             jd = match(exclude, seq(nvars), 0)
             if(!all(jd > 0)) stop ("Some excluded variables out of range")
-            penalty.factor[jd] = 1 # ow can change lambda sequence
+            penalty.factor[,jd] = 1 # ow can change lambda sequence
         }
-        vp = pmax(0, penalty.factor)
-        vp = as.double(vp * nvars / sum(vp))
+        mp = matrix(pmax(0, penalty.factor), nrow = nvars)
+        if (max(mp) <= 0) stop("All penalty factors are <= 0")
+        mp = mp * nvars / sum(mp)
+        vp = as.double(mp[,1])
     } else {
-        vp <- as.double(penalty.factor)
+        vp <- as.double(penalty.factor[,1])
     }
 
     ### check on limits
@@ -880,12 +900,14 @@ elnet.fit <- function(x, y, weights, lambda, alpha = 1.0, intercept = TRUE,
             if(length(exclude) > 0) {
                 jd = match(exclude, seq(nvars), 0)
                 if(!all(jd > 0)) stop ("Some excluded variables out of range")
-                penalty.factor[jd] = 1 # ow can change lambda sequence
+                penalty.factor[,jd] = 1 # ow can change lambda sequence
             }
-            vp = pmax(0, penalty.factor)
-            vp = as.double(vp * nvars / sum(vp))
+            mp = matrix(pmax(0, penalty.factor), nrow = nvars)
+            if (max(mp) <= 0) stop("All penalty factors are <= 0")
+            mp = mp * nvars / sum(mp)
+            vp = as.double(mp[,1])
         } else {
-            vp <- as.double(penalty.factor)
+            vp <- as.double(penalty.factor[,1])
         }
         # compute ju
         # assume that there are no constant variables
