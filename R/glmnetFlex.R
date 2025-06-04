@@ -977,12 +977,12 @@ elnet.fit <- function(x, y, weights, lambda, alpha = 1.0, intercept = TRUE,
         xm <- as.double(attr(x, "xm"))
         xs <- as.double(attr(x, "xs"))
         wls_fit <- spwls_exp(alm0=alm0,almc=almc,alpha=alpha,m=m,no=nobs,ni=nvars,
-                             x=x,xm=xm,xs=xs,r=r,xv=xv,v=v,intr=intr,ju=ju,vp=vp,cl=cl,nx=nx,thr=thr,
+                             x=x,xm=xm,xs=xs,r=r,xv=xv,v=v,intr=intr,ju=ju,vp=vp,mp=mp,cl=cl,nx=nx,thr=thr,
                              maxit=maxit,a=a.new,aint=aint,g=g,ia=ia,iy=iy,iz=iz,mm=mm,
                              nino=nino,rsqc=rsqc,nlp=nlp,jerr=jerr)
     } else {
         wls_fit <- wls_exp(alm0=alm0,almc=almc,alpha=alpha,m=m,no=nobs,ni=nvars,
-                           x=x,r=r,xv=xv,v=v,intr=intr,ju=ju,vp=vp,cl=cl,nx=nx,thr=thr,
+                           x=x,r=r,xv=xv,v=v,intr=intr,ju=ju,vp=vp,mp=mp,cl=cl,nx=nx,thr=thr,
                            maxit=maxit,a=a.new,aint=aint,g=g,ia=ia,iy=iy,iz=iz,mm=mm,
                            nino=nino,rsqc=rsqc,nlp=nlp,jerr=jerr)
     }
