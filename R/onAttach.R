@@ -1,3 +1,3 @@
 .onAttach=function(libname,pkgname){
-   packageStartupMessage("Loaded glmnet ", as.character(packageDescription("glmnet")[["Version"]]))
+   packageStartupMessage("Loaded pam ", as.character(packageDescription("pam")[["Version"]]))
 }
