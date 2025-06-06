@@ -36,6 +36,7 @@ public:
             , class GType
             , class QType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class IntParamType
@@ -54,10 +55,11 @@ public:
             const GType& g,
             const QType& q,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             const IntParamType& int_param)
-        : base_t(thr, maxit, nx, nlp, intr, ia, dev0, vp, cl, ju)
+        : base_t(thr, maxit, nx, nlp, intr, ia, dev0, vp, mp, cl, ju)
         , a_(ni)
         , as_(ni)
         , r_(no)
@@ -109,10 +111,10 @@ protected:
     GLMNETPP_STRONG_INLINE auto max_link() const { return fmax_; }
 
     GLMNETPP_STRONG_INLINE
-    void update_beta(index_t k, value_t gk, value_t l1_regul, value_t l2_regul) {
+    void update_beta(index_t k, index_t i, value_t gk, value_t l1_regul, value_t l2_regul) {
         const auto& cl = this->endpts();
         base_t::update_beta(
-                beta(k), gk, v_(k), this->penalty()(k),
+                beta(i, k), gk, v_(k), this->penalty()(i, k),
                 cl(0,k), cl(1,k), l1_regul, l2_regul);
     }
 
