@@ -34,6 +34,7 @@ public:
     template <class IAType
             , class WType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class IntParamType
@@ -52,10 +53,11 @@ public:
             value_t& dev0,
             const WType& w,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             const IntParamType& int_param)
-        : base_t(thr, maxit, nx, nlp, intr, ia, dev0, vp, cl, ju)
+        : base_t(thr, maxit, nx, nlp, intr, ia, dev0, vp, mp, cl, ju)
         , isd_(isd)
         , kopt_(kopt)
         , pmin_(int_param.pmin)
@@ -106,6 +108,7 @@ public:
     template <class IAType
             , class WType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class IntParamType
@@ -124,10 +127,11 @@ public:
             value_t& dev0,
             const WType& w,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             const IntParamType& int_param)
-        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, no, ni, dev0, w, vp, cl, ju, int_param)
+        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, no, ni, dev0, w, vp, mp, cl, ju, int_param)
         , r_(no)
         , v_(no)
     {}
@@ -169,6 +173,7 @@ public:
             , class YType
             , class WType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class IntParamType>
@@ -186,13 +191,14 @@ public:
             const YType& y,
             const WType& w,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             const IntParamType& int_param)
-        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, y.size(), vp.size(), dev0, w, vp, cl, ju, int_param)
-        , b_(vp.size() + 1)
-        , xv_(vp.size())
-        , bs_(vp.size() + 1)
+        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, y.size(), vp.size(), dev0, w, vp, mp, cl, ju, int_param)
+        , b_(mp.rows() + 1)
+        , xv_(mp.rows())
+        , bs_(mp.rows() + 1)
         , q_(y.size())
         , fmax_(std::log(1.0 / int_param.pmin - 1.0))
         , fmin_(-fmax_)
@@ -234,10 +240,10 @@ protected:
     GLMNETPP_STRONG_INLINE value_t& intercept() { return b_(0); }
 
     GLMNETPP_STRONG_INLINE
-    void update_beta(index_t k, value_t gk, value_t l1_regul, value_t l2_regul) {
+    void update_beta(index_t k, index_t i, value_t gk, value_t l1_regul, value_t l2_regul) {
         const auto& cl = this->endpts();
         base_t::update_beta(
-                beta(k), gk, xv_(k), this->penalty()(k),
+                beta(i, k), gk, xv_(k), this->penalty()(i, k),
                 cl(0,k), cl(1,k), l1_regul, l2_regul);
     }
 
@@ -450,6 +456,7 @@ public:
             , class YType
             , class WType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class IntParamType>
@@ -467,18 +474,19 @@ public:
             const YType& y,
             const WType& w,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             const IntParamType& int_param)
-        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, y.rows(), vp.size(), dev0, w, vp, cl, ju, int_param)
+        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, y.rows(), vp.size(), dev0, w, vp, mp, cl, ju, int_param)
         , nc_(y.cols())
         , exmx_(int_param.exmx)
         , exmn_(-exmx_)
         , emin_(int_param.pmin / (1.0 - int_param.pmin))
         , emax_(1.0 / emin_)
-        , b_(vp.size() + 1, y.cols())
-        , bs_(vp.size() + 1, y.cols())
-        , q_(y.rows(), y.cols())
+        , b_(mp.rows() + 1, y.cols())
+        , bs_(mp.rows() + 1, y.cols())
+        , q_(mp.rows(), y.cols())
         , sxp_(y.rows())
         , y_(y.data(), y.rows(), y.cols())
         , g_(g.data(), g.rows(), g.cols())
@@ -729,6 +737,7 @@ public:
             , class YType
             , class WType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class ISType
@@ -747,12 +756,13 @@ public:
             const YType& y,
             const WType& w,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             ISType& is,
             const IntParamType& int_param)
-        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, g, dev0, y, w, vp, cl, ju, int_param)
-        , xv_(vp.size(), y.cols())
+        : base_t(isd, intr, kopt, thr, maxit, nx, nlp, ia, g, dev0, y, w, vp, mp, cl, ju, int_param)
+        , xv_(mp.rows(), y.cols())
         , di_(y.rows())
         , r_(y.rows())
         , v_(y.rows())
@@ -815,10 +825,10 @@ protected:
     }
 
     GLMNETPP_STRONG_INLINE
-    void update_beta(index_t k, value_t gk, value_t l1_regul, value_t l2_regul) {
+    void update_beta(index_t k, index_t i, value_t gk, value_t l1_regul, value_t l2_regul) {
         const auto& cl = this->endpts();
         base_t::update_beta(
-                beta(k), gk, xv_ic_(k), this->penalty()(k),
+                beta(i, k), gk, xv_ic_(k), this->penalty()(i, k),
                 cl(0,k), cl(1,k), l1_regul, l2_regul);
     }
 
@@ -896,10 +906,12 @@ protected:
 
         std::for_each(begin, end, 
                 [&](auto l) {  
-                    if (this->penalty()(l) <= 0) { s = b.row(l+1).sum()/nc; }
-                    else { s = elc(beta, this->endpts().col(l), b.row(l+1)); }
-                    b.row(l+1).array() -= s;
-                    update_y_pred_f(l, s, di_);
+                    for (index_t i = 0; i < g.cols(); ++i) {
+                            if (this->penalty()(l, i) <= 0) { s = b.row(l+1).sum()/nc; }
+                            else { s = elc(beta, this->endpts().col(l), b.row(l+1)); }
+                            b.row(l+1).array() -= s;
+                            update_y_pred_f(l, s, di_);
+                    }
                 });
         update_p_pred_f(di_);
 
@@ -1108,6 +1120,7 @@ public:
             , class WType
             , class XVType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType
             , class IntParamType>
@@ -1124,10 +1137,11 @@ public:
             const WType& w,
             const XVType& xv,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju,
             const IntParamType& int_param)
-        : base_t(true /* isd not used */, intr, 2 /* kopt not used */, thr, maxit, nx, nlp, ia, g, dev0, y, w, vp, cl, ju, int_param)
+        : base_t(true /* isd not used */, intr, 2 /* kopt not used */, thr, maxit, nx, nlp, ia, g, dev0, y, w, vp, mp, cl, ju, int_param)
         , bnorm_thr_(int_param.bnorm_thr)
         , bnorm_mxit_(int_param.bnorm_mxit)
         , eps_(int_param.eps)
@@ -1183,8 +1197,8 @@ protected:
 
     template <class ComputeGradFType>
     GLMNETPP_STRONG_INLINE
-    void update_beta(index_t k, const ComputeGradFType& compute_grad_f) {
-        gaussian_multi_t::update_beta(k, beta(k), xv_(k), this->penalty()(k),
+    void update_beta(index_t k, index_t i, const ComputeGradFType& compute_grad_f) {
+        gaussian_multi_t::update_beta(k, beta(i, k), xv_(k), this->penalty()(i, k),
                 g_next_, g_next_, l1_regul_scaled_, l2_regul_scaled_, 
                 bnorm_thr_, bnorm_mxit_, isc_, 
                 [&](auto i, auto) { return this->endpts()(i,k); },
