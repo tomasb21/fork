@@ -276,7 +276,7 @@ public:
         , nlp_(nlp)
         , ia_(ia.data(), ia.size())
         , vp_(vp.data(), vp.size())
-        , mp_(mp.data(), mp.size())
+        , mp_(mp.data(), mp.rows())
         , cl_(cl.data(), cl.rows(), cl.cols())
         , ju_(util::init_bvec<bool_t>::eval(ju))
     {}
@@ -394,7 +394,7 @@ public:
             const JUType& ju
             )
         : base_t(thr, maxit, nin_, nx, nlp, ia, vp, mp, cl, ju)
-        , mm_(mp.size())
+        , mm_(mp.rows())
     {
         base_t::construct(mm_);
         ia.setZero();    
@@ -443,8 +443,8 @@ public:
             const JUType& ju
             )
         : base_t(thr, maxit, nx, nlp, ia, vp, mp, cl, ju)
-        , ga_(mp.size())
-        , ixx_(mp.size(), false)
+        , ga_(mp.rows())
+        , ixx_(mp.rows(), false)
         , intr_(intr)
         , dev0_(dev0)
     {
