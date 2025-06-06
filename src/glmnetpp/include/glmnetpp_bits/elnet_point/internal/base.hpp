@@ -95,6 +95,7 @@ protected:
      * Computes strong map given a threshold.
      */
     template <class GType
+            , class VPType
             , class MPType
             , class SType
             , class SkipType>
@@ -102,6 +103,7 @@ protected:
     static bool 
     compute_strong_map(
             const GType& g,
+            const VPType& vp,
             const MPType& penalty,
             SType& strong_map,
             value_t tlam,
@@ -112,7 +114,7 @@ protected:
                 util::counting_iterator<index_t>(0),
                 util::counting_iterator<index_t>(g.size()),
                 [&](auto k) {
-                    for (index_t i = 0; i < n_classes; ++i) {
+                    for (index_t i = 0; i < g.cols(); ++i) {
                         if (check_kkt(g(i), tlam, penalty(i, k))) {
                             strong_map[k] = true;
                             updated = true;
@@ -128,7 +130,8 @@ protected:
      * Same as above, but allows users to perform any action upon kkt failure at index k.
      */
     template <class GType
-            , class VPType
+            , clas VPType
+            , class MPType
             , class SType
             , class FType
             , class SkipType>
@@ -136,7 +139,8 @@ protected:
     static bool 
     compute_strong_map(
             const GType& g,
-            const VPType& penalty,
+            const VPType& vp,
+            const MPType& penalty,
             SType& strong_map,
             value_t tlam,
             FType f,
@@ -147,11 +151,13 @@ protected:
                 util::counting_iterator<index_t>(0),
                 util::counting_iterator<index_t>(g.size()),
                 [&](auto k) {
-                    if (check_kkt(g(k), tlam, penalty(k))) {
-                        strong_map[k] = true;
-                        updated = true;
-                        f(k);
-                    }
+                    for (index_t i = 0; i < g.cols(); ++i) {
+                        if (check_kkt(g(k), tlam, penalty(k))) {
+                            strong_map[k] = true;
+                            updated = true;
+                            f(k);
+                        }
+                    }        
                 }, 
                 skip_f);
         return updated;
@@ -162,13 +168,15 @@ protected:
      */
     template <class GType
             , class VPType
+            , class MPType
             , class SType
             , class SkipType>
     GLMNETPP_STRONG_INLINE
     static bool 
     compute_strong_map(
             const GType& g,
-            const VPType& penalty,
+            const VPType& vp,
+            const MPType& penalty,
             SType& strong_map,
             value_t beta,
             value_t lmda,
@@ -184,6 +192,7 @@ protected:
      */
     template <class GType
             , class VPType
+            , class MPType
             , class SType
             , class FType
             , class SkipType>
@@ -191,7 +200,8 @@ protected:
     static bool 
     compute_strong_map(
             const GType& g,
-            const VPType& penalty,
+            const VPType& vp,
+            const MPType& penalty,
             SType& strong_map,
             value_t beta,
             value_t lmda,
@@ -243,6 +253,7 @@ public:
 
     template <class IAType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType>
     ElnetPointInternalBaseViewer(
@@ -253,6 +264,7 @@ public:
             index_t& nlp,
             IAType& ia,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju
             )
@@ -264,6 +276,7 @@ public:
         , nlp_(nlp)
         , ia_(ia.data(), ia.size())
         , vp_(vp.data(), vp.size())
+        , mp_(mp.data(), mp.size())
         , cl_(cl.data(), cl.rows(), cl.cols())
         , ju_(util::init_bvec<bool_t>::eval(ju))
     {}
@@ -271,7 +284,7 @@ public:
     GLMNETPP_STRONG_INLINE void increment_passes() { ++nlp_; }
     GLMNETPP_STRONG_INLINE void coord_desc_reset() { dlx_ = 0.0; }
     GLMNETPP_STRONG_INLINE auto all_begin() const { return util::counting_iterator<index_t>(0); }
-    GLMNETPP_STRONG_INLINE auto all_end() const { return util::counting_iterator<index_t>(vp_.size()); }
+    GLMNETPP_STRONG_INLINE auto all_end() const { return util::counting_iterator<index_t>(mp_.size()); } //estava vp aqui
     GLMNETPP_STRONG_INLINE auto active_begin() const { return util::one_to_zero_iterator<index_t>(ia_.data()); }
     GLMNETPP_STRONG_INLINE auto active_end() const { return util::one_to_zero_iterator<index_t>(ia_.data() + nin_); }
     GLMNETPP_STRONG_INLINE bool is_active(index_t j) const { return mm_(j); }
@@ -299,7 +312,7 @@ protected:
     GLMNETPP_STRONG_INLINE void set_thresh(value_t t) { thr_ = t; }
     GLMNETPP_STRONG_INLINE auto thresh() const { return thr_; }
     GLMNETPP_STRONG_INLINE const auto& endpts() const { return cl_; }
-    GLMNETPP_STRONG_INLINE const auto& penalty() const { return vp_; }
+    GLMNETPP_STRONG_INLINE const auto& penalty() const { return mp_; }
     GLMNETPP_STRONG_INLINE const auto& exclusion() const { return ju_; }
     GLMNETPP_STRONG_INLINE auto active_idx(index_t k) const { return mm_(k)-1; }
 
@@ -343,7 +356,8 @@ private:
     Eigen::Map<ivec_t> mm_;     // index k is j if feature k is the jth feature active
     index_t& nlp_;                      // number of passes
     Eigen::Map<ivec_t> ia_;             // active set (important that it's 1-indexed!)
-    Eigen::Map<const vec_t> vp_;        // penalties on features
+    Eigen::Map<const vec_t> vp_;        // vector penalties on features
+    Eigen::Map<const mat_t> mp_;        // matrix penalties on features 
     Eigen::Map<const mat_t> cl_;        // limits on each feature (2 x nvars)
     ju_t ju_;                           // exclusion type
 };
@@ -365,6 +379,7 @@ protected:
 public:
     template <class IAType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType>
     ElnetPointInternalBase(
@@ -374,11 +389,12 @@ public:
             index_t& nlp,
             IAType& ia,
             const VPType& vp,
+            const VPType& mp,
             const CLType& cl,
             const JUType& ju
             )
-        : base_t(thr, maxit, nin_, nx, nlp, ia, vp, cl, ju)
-        , mm_(vp.size())
+        : base_t(thr, maxit, nin_, nx, nlp, ia, vp, mp, cl, ju)
+        , mm_(mp.size())
     {
         base_t::construct(mm_);
         ia.setZero();    
@@ -410,6 +426,7 @@ protected:
 public:
     template <class IAType
             , class VPType
+            , class MPType
             , class CLType
             , class JUType>
     ElnetPointInternalNonLinearBase(
@@ -421,12 +438,13 @@ public:
             IAType& ia,
             value_t& dev0,
             const VPType& vp,
+            const MPType& mp,
             const CLType& cl,
             const JUType& ju
             )
-        : base_t(thr, maxit, nx, nlp, ia, vp, cl, ju)
-        , ga_(vp.size())
-        , ixx_(vp.size(), false)
+        : base_t(thr, maxit, nx, nlp, ia, vp, mp, cl, ju)
+        , ga_(mp.size())
+        , ixx_(mp.size(), false)
         , intr_(intr)
         , dev0_(dev0)
     {
