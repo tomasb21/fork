@@ -906,7 +906,7 @@ protected:
 
         std::for_each(begin, end, 
                 [&](auto l) {  
-                    for (index_t i = 0; i < g.cols(); ++i) {
+                    for (index_t i = 0; i < 3; ++i) { //meter g.cols() aqui
                             if (this->penalty()(l, i) <= 0) { s = b.row(l+1).sum()/nc; }
                             else { s = elc(beta, this->endpts().col(l), b.row(l+1)); }
                             b.row(l+1).array() -= s;
