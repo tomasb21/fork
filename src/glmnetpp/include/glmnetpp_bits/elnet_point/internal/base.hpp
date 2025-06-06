@@ -95,14 +95,14 @@ protected:
      * Computes strong map given a threshold.
      */
     template <class GType
-            , class VPType
+            , class MPType
             , class SType
             , class SkipType>
     GLMNETPP_STRONG_INLINE
     static bool 
     compute_strong_map(
             const GType& g,
-            const VPType& penalty,
+            const MPType& penalty,
             SType& strong_map,
             value_t tlam,
             SkipType skip_f) 
@@ -112,11 +112,14 @@ protected:
                 util::counting_iterator<index_t>(0),
                 util::counting_iterator<index_t>(g.size()),
                 [&](auto k) {
-                    if (check_kkt(g(k), tlam, penalty(k))) {
-                        strong_map[k] = true;
-                        updated = true;
-                    }
-                }, 
+                    for (index_t i = 0; i < n_classes; ++i) {
+                        if (check_kkt(g(i), tlam, penalty(i, k))) {
+                            strong_map[k] = true;
+                            updated = true;
+                        }
+                    }
+                }
+, 
                 skip_f);
         return updated;
     }
