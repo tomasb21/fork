@@ -69,8 +69,8 @@ protected:
     GLMNETPP_STRONG_INLINE
     state_t update(index_t k, const PointPackType& pack, DiffType&& diff)
     {
-        diff = this->beta(k);           // save old beta_k
-        this->update_beta(k, pack);     // update new beta_k (assumes diff doesn't change)
+        diff = this->beta(k, i);           // save old beta_k
+        this->update_beta(k, i, pack);     // update new beta_k (assumes diff doesn't change)
 
         if (this->equal(diff, this->beta(k))) return state_t::continue_;
 
