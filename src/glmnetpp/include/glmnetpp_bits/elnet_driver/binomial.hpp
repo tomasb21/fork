@@ -211,7 +211,7 @@ public:
             , class GType
             , class JDType
             , class VPType
-            , class MVPType
+            , class MPType
             , class CLType
             , class ULamType
             , class IntType
